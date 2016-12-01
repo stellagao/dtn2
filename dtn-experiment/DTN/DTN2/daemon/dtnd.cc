@@ -230,6 +230,9 @@ DTND::main(int argc, char* argv[])
 
     AreaManager *areamanager= AreaManager::Getinstance();
     areamanager->init();//用于将原来的历史移动规律读入该程序
+
+    NeighbourManager *neimanager=  NeighbourManager::Getinstance();
+    neimanager->init();
     CurrentLocationFromSimulator *location=CurrentLocationFromSimulator::Getinstance();
     location->start();
     TimeManager *timemanager=TimeManager::GetInstance();

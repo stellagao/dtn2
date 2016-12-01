@@ -33,5 +33,10 @@ public:
 	{
 		return recvfrom(__fd,__buf,__n,__flags,__addr,__addr_len);
 	}
+	static int myclose(int __fd)
+	{
+		return close(__fd);
+	}
+
 };
 //end by gaorui

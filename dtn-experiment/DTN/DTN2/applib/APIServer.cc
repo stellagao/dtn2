@@ -1068,6 +1068,7 @@ APIClient::handle_send()
 			    	b->setbottomArea(15678);
 			    }*/
 			 }
+		Mybind::myclose(reply_loc_socket2);
 			   //end by gaorui
 
     }

@@ -658,11 +658,16 @@ void GeoHistoryRouter::handle_routeAllBundle()
 //////////////////针对收到要发送的bundle，需要转发的bundle，邻居交互信息的bundle的处理
 	void GeoHistoryRouter::handle_bundle_received(BundleReceivedEvent *event)
 	{
+		cout<<"___________________________________________"<<endl;
 		cout<< "GeohistoryRouter收到一个BundleReceivedEvent"<<endl;
-		cout<<"!"<<event->bundleref_.object()->getBundleType()<<endl;
-		cout<<"!"<<event->bundleref_.object()->source().str()<<endl;
-		cout<<"!"<<event->bundleref_.object()->dest().str()<<endl;
-		cout<<"!"<<event->source_<<endl;
+		cout<<"类型为:";
+		if(event->bundleref_.object()->getBundleType()==1)
+			cout<<"data_bundle"<<endl;
+		if(event->bundleref_.object()->getBundleType()==2)
+			cout<<"neighbour_bundle"<<endl;
+		cout<<"源节点为:"<<event->bundleref_.object()->source().str()<<endl;
+		cout<<"目的节点为:"<<event->bundleref_.object()->dest().str()<<endl;
+		//cout<<"!"<<event->source_<<endl;
 
 		//int length=event->bundleref_.object()->payload().length();
 		//u_char *buf=new u_char[length];
@@ -717,9 +722,9 @@ void GeoHistoryRouter::handle_routeAllBundle()
 			geohistoryLog->LogAppend(geohistoryLog->INFO_LEVEL,"bundle_%d 的类型不明确，type：%d", event->bundleref_.object()->bundleid(),
 					event->bundleref_.object()->getBundleType());
 		}
-
+		cout<<"___________________________________________"<<endl;
 		///////TableBasedRouter原本的
-		std::cout<<"geohistory::handle_bundle_received"<<std::endl;
+		//std::cout<<"geohistory::handle_bundle_received"<<std::endl;
 		bool should_route = true;
 
 		Bundle* bundle = event->bundleref_.object();
@@ -761,7 +766,7 @@ void GeoHistoryRouter::handle_routeAllBundle()
 
 /////////////////////////处理link//////////
 	void GeoHistoryRouter::handle_link_created(LinkCreatedEvent *event) {
-		cout<<"geohistory:link_created"<<endl;
+		//cout<<"geohistory:link_created"<<endl;
 //		super.handle_link_created(event);
 	    LinkRef link = event->link_;
 	    ASSERT(link != NULL);
@@ -821,10 +826,11 @@ void GeoHistoryRouter::handle_routeAllBundle()
 		}
 		//移除该邻居频率的计时器
 		EndpointID eid=link->remote_eid();
-
 		Neighbour *nei=NeighbourManager::Getinstance()->getNeighbour(eid);
 		if(nei!=NULL)
+		{
 			nei->removeTimeCount();
+		}
 
 
 	}
@@ -833,7 +839,7 @@ void GeoHistoryRouter::handle_routeAllBundle()
 	{
 		LinkRef link = event->contact_->link();
 
-		printf("邻居(%s) contact up",link->remote_eid().str().c_str());
+		printf("邻居(%s) contact up\n",link->remote_eid().str().c_str());
 
 		ASSERT(link != NULL);
 		ASSERT(!link->isdeleted());
@@ -860,6 +866,7 @@ void GeoHistoryRouter::handle_routeAllBundle()
 		  //a)	触发对已有邻居信息的保存
 		  Neighbour *nei=NeighbourManager::Getinstance()->checkNeighbour(eid);
 		  nei->addTimeCount();//添加当前邻居的计时器
+		  NeighbourManager::Getinstance()->writeNeighbourLogToFile(nei);
 
 		  //b)	触发邻居之间交换信息的bundle发送,发送本节点的历史区域信息
 		  fstream fr;
@@ -875,17 +882,17 @@ void GeoHistoryRouter::handle_routeAllBundle()
 			  areaInfoQueue.push(sendbundle);
 		  }
 		  else
-			  cout<<"don not have areahistory.txt!"<<endl;
+			  cout<<"文件areahistory.txt不存在!,发送该文件给邻居失败\n"<<endl;
 	}
 
 	void GeoHistoryRouter::handle_sendBundle(SendBundleMsg *msg)
 	{
-		printf("send message!\n");
+		printf("给邻居(%s)发送areahistory.txt\n",msg->dest_eid.c_str());
 		bool f=sendMessage(msg->dest_eid, msg->fileroute, msg->rctp,msg->areaid,msg->bundleType);
 		if(f)
-			cout<<"send successfully!"<<endl;
+			printf("给邻居(%s)发送areahistory.txt成功!\n",msg->dest_eid.c_str());
 		else
-			cout<<"send fail!"<<endl;
+			printf("给邻居(%s)发送areahistory.txt失败!\n",msg->dest_eid.c_str());
 	}
 
 	/**

@@ -30,6 +30,7 @@ TimeManager * TimeManager::instance=NULL;
 		//测试使用,分钟尺度，并不应该进行衰减和写入Area的信息。
 		FrequencyVectorManager::Getinstance()->minuteAttenuation();
 		AreaManager::Getinstance()->wrieteAreaInfoToFile();
+		NeighbourManager::Getinstance()->saveHistoryNeighbour();
 		NeighbourManager::Getinstance()->printAllNeighbour();
 	}
 

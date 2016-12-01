@@ -62,6 +62,7 @@ private:
 
 public:
 	void Payload_update(string eid,const BundlePayload &payload);
+	void WriteToNeiMoveLog(string filename);
 	/**
 	 * 该邻居的区域向量记录
 	 */
