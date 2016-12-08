@@ -101,5 +101,18 @@ public:
 	 * @return
 	 */
 	Area *checkArea(Area area);
+
+	Area *lookforArea(string areakey)
+	{
+		map<string,Area>::iterator it=areaMap.find(areakey);
+		if(it!=areaMap.end())
+		{
+			Area *area=&(it->second);
+			return area;
+		}
+		else
+			return NULL;
+
+	}
 };
 }

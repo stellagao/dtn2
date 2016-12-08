@@ -9,8 +9,8 @@ namespace dtn
 	//const string AreaManager::historyAreaFilePath="/home/gaorui/workspace/DTN/DTN2/logDocuments/historyarea.txt";
 	//const string AreaManager::historyAreaMovingFilePath="/home/gaorui/workspace/DTN/DTN2/logDocuments/areamoving.txt";
 
-	const string AreaManager::historyAreaFilePath="./logDocuments/historyarea.txt";
-	const string AreaManager::historyAreaMovingFilePath="./logDocuments/areamoving.txt";
+	const string AreaManager::historyAreaFilePath="logDocuments/historyarea.txt";
+	const string AreaManager::historyAreaMovingFilePath="logDocuments/areamoving.txt";
 
 	AreaManager * AreaManager::instance=NULL;
 	void AreaManager::init()
@@ -76,7 +76,7 @@ namespace dtn
 
 
 			geohistoryLog->LogAppend(geohistoryLog->INFO_LEVEL,"%s:从初始文件中获得本地移动的移动规律，并打印出来：",tag.c_str());
-			printAllAreaMoving();
+			//printAllAreaMoving();
 		}
 
 }

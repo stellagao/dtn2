@@ -2,9 +2,9 @@
 namespace dtn{
 	NeighbourManager *NeighbourManager::instance=NULL;
 	const string NeighbourManager::tag="NeighbourManager";
-	string NeighbourManager::historyNeighbourFileName="./logDocuments/geoHistory_dtn/historyNeighbour.txt";
-	string NeighbourManager::historyNeighbourFileDirectory="./logDocuments/geoHistory_dtn/";
-	string NeighbourManager::historyNeighbourFilePath="./logDocuments/neighbour.txt";
+	string NeighbourManager::historyNeighbourFileName="logDocuments/geoHistory_dtn/historyNeighbour.txt";
+	string NeighbourManager::historyNeighbourFileDirectory="logDocuments/geoHistory_dtn/";
+	string NeighbourManager::historyNeighbourFilePath="logDocuments/geoHistory_dtn/neighbour.txt";
 
 	NeighbourManager::NeighbourManager()
 	{
@@ -18,7 +18,6 @@ namespace dtn{
 	{
 		//从文件中读取邻居
 		fstream file;
-
 		file.open(historyNeighbourFileName.c_str(),ios::in);
 		if (!file.is_open())
 	    {
@@ -176,12 +175,21 @@ namespace dtn{
 	{
 		//if(eid==null)
 			//return null;
+		string eid_r;
 		string eid_s=eid.str();
+		string eid_s1="";
+		eid_s1.clear();
+		eid_s1.append(eid_s.begin(),(--(--eid_s.end())));
 		//eid_s=eid_s.substr(0,eid_s.length()-2);
-
-		hash_map<string,Neighbour>::iterator it=neighbourlist.find(eid_s);
+		if(*(--eid_s.end())=='m')
+			eid_r=eid_s;
+		if(*(--eid_s1.end())=='m')
+			eid_r=eid_s1;
+		hash_map<string,Neighbour>::iterator it=neighbourlist.find(eid_r);
 		if(it==neighbourlist.end())
+		{
 			return NULL;
+		}
 		else
 		{
 			Neighbour *n=&(it->second);

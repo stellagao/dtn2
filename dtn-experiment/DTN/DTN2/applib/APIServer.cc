@@ -907,15 +907,19 @@ APIClient::handle_send()
     b = new Bundle();
 
     //add by gaorui
-    b->setBundleType(Bundle::DATA_BUNDLE);
     b->setAreaSize(0);
     if(spec.areaid[0]!='\0')
     {
+        b->setBundleType(Bundle::DATA_BUNDLE);
 		char recvBuf[MAXLINE+1];
 		char buf[MAXLINE];
 		int areaid_int=0;
-		for(int i=0;spec.areaid[i]!='\0';++i)
-			areaid_int=areaid_int*10+spec.areaid[i]-'0';
+		int i=0;
+		for(;spec.areaid[i]!='\0';++i)
+		{
+			if(spec.areaid[i]-'0'<=9 && spec.areaid[i]-'0'>=0)
+				areaid_int=areaid_int*10+spec.areaid[i]-'0';
+		}
 		char areaid_char[5];
 		MyByteHelper::int_to_byte_array(areaid_int,areaid_char);
 
@@ -938,7 +942,7 @@ APIClient::handle_send()
 		int n = Mybind::myrecvfrom(reply_loc_socket2, recvBuf, MAXLINE,0, (struct sockaddr *)&(cliaddr_reply2),&(servlen_reply2));
 		if(n == -1)
 		{
-			printf("read error\n");
+			printf("从MapInterface中接受区域的父区域信息错误,来自于APIServer\n");
 		}
 		recvBuf[n]=0;
 		//处理接收到的数据

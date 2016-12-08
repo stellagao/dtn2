@@ -68,7 +68,6 @@ namespace dtn
 			return;
 		}
 		neighbourAreaDir.close();
-
 		fstream neighbourAreaFile;
 		neighbourAreaFile.open(file.c_str(),ios::in);
 		if(neighbourAreaFile)
@@ -161,6 +160,7 @@ namespace dtn
 	NeighbourArea::NeighbourArea(EndpointID eid)
 	{
 		neighbourEID=eid;
+		neighbourEIDstr=eid.str();
 		init();
 	}
 
@@ -193,6 +193,8 @@ namespace dtn
 
 				//将读取到的area保存起来
 				ia >>area;
+				area.WhetherisNeiArea=true;
+				area.Neighbourid=neighbourEIDstr;
 				char c[20];
 				string s;
 				sprintf(c,"%d",area.level);

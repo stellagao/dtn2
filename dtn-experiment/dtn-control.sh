@@ -16,10 +16,12 @@ help(){
 	echo "./dtn-control.sh -osm2Sqlite: open osm2Sqlite and produce sumo.db"
 	echo "./dtn-control.sh -dtn2: open dtn2"
 	echo "./dtn-control.sh -clearData: clear log and historyarea law and neighbour historyarea law,if you want to change 			frequency vector's type,you must carry out this first"
+	echo "./dtn-control.sh -sendBundle : Then,knock command at the terminal,for example: ./dtnsend -s dtn://192.168.5.1.gao.com 			-d dtn://192.168.5.2.gao.com -t m -p hello -g 121412 "
+
 	echo "with 2 or more arguments :"
 	echo "./dtn-control.sh -renameDevices : rename the dtn node's name"
 	echo "./dtn-control.sh -modifyVector : modify frequency vector's type,options [minute | hour | monafteve | week | month]
-		for example, ./dtn-control.sh -modifyVector minute hour week"
+		for example: ./dtn-control.sh -modifyVector minute hour week"
 
 	}
 #find node's name from /etc/dtn.conf
@@ -50,13 +52,15 @@ elif [ $# -eq 1 ];then
 	elif [ $1 = "-realSimulator" ];then
 		#open osm2Sqlite and produce sumo.db
 		cd ./RealSimulator
-		gnome-terminal -x bash -c "./RealSimulator"
+		#gnome-terminal -x bash -c "./RealSimulator"
+		./RealSimulator
 		cd $this_dir
 
 	elif [ $1 = "-mapInterface" ];then
 		#open mapInterface
 		cd ./MapInterface
-		gnome-terminal -x bash -c "./MapInterface"
+		#gnome-terminal -x bash -c "./MapInterface"
+		./MapInterface
 		cd $this_dir
 
 	elif [ $1 = "-osm2Sqlite" ];then
@@ -67,8 +71,9 @@ elif [ $# -eq 1 ];then
 
 	elif [ $1 = "-dtn2" ];then
 		#open dtn2
-		cd ./DTN/DTN2/daemon
-		gnome-terminal -x bash -c "./dtnd"
+		cd ./DTN/DTN2/
+		#gnome-terminal -x bash -c "./dtnd"
+		./daemon/dtnd
 		cd $this_dir
 
 	elif [ $1 = "-clearData" ];then
@@ -78,7 +83,11 @@ elif [ $# -eq 1 ];then
 		rm -rf GeohistoryLog.txt
 		rm -rf historyarea.txt
 		rm -rf geoHistory_dtn
+		rm -rf neighbour.txt
 		cd $this_dir
+
+
+
 	else
 	     echo "error : wrong arguments"
 	     help
@@ -90,10 +99,13 @@ elif [ $# -eq 2 ];then
 		./ModifyDtnNodeName $2	
 		cd $this_dir
 
-	elif [ $1 = "-modifyVector" ];then
-		#modify frequency vector's type
-		cd ./ModifyVector
-		./ModifyVector $*
+	elif [ $1 = "-sendBundle" ];then
+		#send bundle
+		cd ./DTN/DTN2/apps/dtnsend/
+		temp=""
+		temp=${2#* }
+		echo $temp
+		./dtnsend $temp
 		cd $this_dir
 
 	else

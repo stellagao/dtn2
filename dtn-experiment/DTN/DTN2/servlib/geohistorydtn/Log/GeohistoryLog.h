@@ -20,7 +20,7 @@ private:
 	GeohistoryLog()
 		{
 			//name="/home/gaorui/workspace/DTN/DTN2/logDocuments/GeohistoryLog.txt";
-			name="./logDocuments/GeohistoryLog.txt";
+			name="logDocuments/GeohistoryLog.txt";
 
 			errno = 0;
 			g_pWTLog_File_descriptor = fopen(name.c_str(),"a");

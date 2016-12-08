@@ -42,9 +42,9 @@ PATH: /home/gaorui/Desktop/intel-compiler/x86-android-toolchain/bin
 ## ----------- ##
 
 configure:2424: checking location of source directory
-configure:2427: result: "/home/gaorui/workspace/DTN/DTN2"
+configure:2427: result: "/home/gaorui/dtn-experiment/DTN/DTN2"
 configure:2432: checking location of build directory
-configure:2434: result: "/home/gaorui/workspace/DTN/DTN2"
+configure:2434: result: "/home/gaorui/dtn-experiment/DTN/DTN2"
 configure:2523: checking for gcc
 configure:2539: found /usr/bin/gcc
 configure:2550: result: gcc
@@ -108,7 +108,7 @@ configure:3231: gcc  -c -g -O2  conftest.c >&5
 configure:3231: $? = 0
 configure:3244: result: none needed
 configure:3282: checking for an oasys installation (version 1.5 or better)
-configure:3478: gcc -o conftest -g -O2 -I/home/gaorui/workspace/DTN/DTN2/oasys/include   /home/gaorui/workspace/DTN/DTN2/oasys/lib/liboasys-1.6.0.a conftest.c  >&5
+configure:3478: gcc -o conftest -g -O2 -I/home/gaorui/dtn-experiment/DTN/DTN2/oasys/include   /home/gaorui/dtn-experiment/DTN/DTN2/oasys/lib/liboasys-1.6.0.a conftest.c  >&5
 configure:3478: $? = 0
 configure:3480: result: ../oasys
 configure:3619: checking how to run the C preprocessor
@@ -298,7 +298,7 @@ configure:4050: result: no
 configure:4057: result: bonjour header not found
 configure:4063: checking for library containing DNSServiceRegister
 configure:4094: gcc -o conftest    conftest.c  >&5
-/tmp/ccj07eR8.o: In function `main':
+/tmp/ccWLcFZM.o: In function `main':
 conftest.c:(.text+0x7): undefined reference to `DNSServiceRegister'
 collect2: ld returned 1 exit status
 configure:4094: $? = 1
@@ -742,7 +742,7 @@ oasys_cv_prog_gxxver=4.6
 
 AR='ar'
 BBN_IPND_ENABLED='0'
-BUILDDIR='/home/gaorui/workspace/DTN/DTN2'
+BUILDDIR='/home/gaorui/dtn-experiment/DTN/DTN2'
 BUILD_SYSTEM='Linux'
 CC='gcc'
 CFLAGS='-g -O2'
@@ -772,12 +772,12 @@ LDFLAGS_SHLIB='-shared -fPIC -DPIC'
 LIBOBJS=''
 LIBS=''
 LTLIBOBJS=''
-OASYS_COMPAT_LDFLAGS='/home/gaorui/workspace/DTN/DTN2/oasys/lib/liboasyscompat-1.6.0.a'
-OASYS_ETCDIR='/home/gaorui/workspace/DTN/DTN2/oasys/share'
-OASYS_INCDIR='/home/gaorui/workspace/DTN/DTN2/oasys/include'
-OASYS_LDFLAGS='/home/gaorui/workspace/DTN/DTN2/oasys/lib/liboasys-1.6.0.a'
-OASYS_LDFLAGS_STATIC='/home/gaorui/workspace/DTN/DTN2/oasys/lib/liboasys-1.6.0.a'
-OASYS_LIBDIR='/home/gaorui/workspace/DTN/DTN2/oasys/lib'
+OASYS_COMPAT_LDFLAGS='/home/gaorui/dtn-experiment/DTN/DTN2/oasys/lib/liboasyscompat-1.6.0.a'
+OASYS_ETCDIR='/home/gaorui/dtn-experiment/DTN/DTN2/oasys/share'
+OASYS_INCDIR='/home/gaorui/dtn-experiment/DTN/DTN2/oasys/include'
+OASYS_LDFLAGS='/home/gaorui/dtn-experiment/DTN/DTN2/oasys/lib/liboasys-1.6.0.a'
+OASYS_LDFLAGS_STATIC='/home/gaorui/dtn-experiment/DTN/DTN2/oasys/lib/liboasys-1.6.0.a'
+OASYS_LIBDIR='/home/gaorui/dtn-experiment/DTN/DTN2/oasys/lib'
 OASYS_VERSION='1.6.0'
 OBJEXT='o'
 OPTIMIZE=''
@@ -796,7 +796,7 @@ RPATH='-Wl,-rpath=. -Wl,-rpath=$(prefix)/lib'
 SHELL='/bin/bash'
 SHLIBS='yes'
 SHLIB_EXT='so'
-SRCDIR='/home/gaorui/workspace/DTN/DTN2'
+SRCDIR='/home/gaorui/dtn-experiment/DTN/DTN2'
 STATIC='no'
 SYS_EXTLIB_CFLAGS=''
 SYS_EXTLIB_LDFLAGS=''

@@ -80,5 +80,17 @@ public:
 	 */
 	void saveNeighbourAreaPayload(BundlePayload payload,string eid);
 
+	Neighbour* lookforNeighbour(string id)
+	{
+		hash_map<string,Neighbour>::iterator it=neighbourlist.find(id);
+		if(it!=neighbourlist.end())
+		{
+			Neighbour *nei=&(it->second);
+			return nei;
+		}
+		else
+			return NULL;
+
+	}
 };
 }

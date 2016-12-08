@@ -47,6 +47,20 @@ private:
 	 RouteAllBundleMsg *routeAllBundle;
 	 map<string,int> Forward2PayloadNumMap;
 	 map<string,int> Forward1PayloadNumMap;
+	 static string BundleLogPath;
+
+	 pthread_mutex_t lockBundleLog;
+
+	void lock_BundleLog()
+	{
+		pthread_mutex_lock(&lockBundleLog);
+	}
+
+	void unlock_BundleLog()
+	{
+		pthread_mutex_unlock(&lockBundleLog);
+	}
+
 	/**
 	 * 路由的方式
 	 */
@@ -199,6 +213,170 @@ public:
 			}
 		}
 	}
+
+	void writeDeliveryBundleLogToFile(Bundle *bundle)
+	{
+		lock_BundleLog();
+		FILE * fr;
+		errno=0;
+		fr= fopen(BundleLogPath.c_str(),"a");
+		if (NULL == fr)
+		{
+			if (EINVAL == errno)
+			{
+				printf("err:fopen log file %s failed\n",BundleLogPath.c_str());
+			}
+			else
+			{
+				printf("err:unknow\n");
+			}
+		}
+		string temp;
+		string father;
+
+		tm currentTime=CurrentTimeManager::Getinstance()->currentTime;
+		if(bundle->getBundleType()!=Bundle::ORIGINAL_BUNDLE &&
+			bundle->dest().str()==BundleDaemon::GetInstance()->local_eid().str())
+		{
+			if(bundle->dest().str()==BundleDaemon::GetInstance()->local_eid().str())
+				temp.append("delivery a new bundle:\n");
+			char time_c[10];
+			sprintf(time_c,"%d",currentTime.tm_mon+1);
+			temp.append(time_c);
+			temp.append("月,");
+			if(currentTime.tm_wday==0)
+				temp.append("星期天,");
+			else
+			{
+				sprintf(time_c,"%d",currentTime.tm_wday);
+				temp.append("星期");
+				temp.append(time_c);
+				temp.append(",");
+			}
+			sprintf(time_c,"%d",currentTime.tm_hour);
+			temp.append(time_c);
+			temp.append("点");
+			sprintf(time_c,"%d",currentTime.tm_min);
+			temp.append(time_c);
+			temp.append("分钟\n");
+			temp.append("bundle的类型: ");
+			if(bundle->getBundleType()==1)
+			{
+				temp.append("data_bundle\n");
+				temp.append("bundle的目的区域: ");
+				sprintf(time_c,"%d",bundle->bottomArea());
+				temp.append(time_c);
+				temp.append("\n");
+			}
+			if(bundle->getBundleType()==2)
+			{
+				temp.append("neighbour_bundle\n");
+			}
+			temp.append("bundle的源结点: ");
+			temp.append(bundle->source().str());
+			temp.append("\nbundle的目的结点: ");
+			temp.append(bundle->dest().str());
+			temp.append("\nbundle的负载: ");
+			sprintf(time_c,"%d",bundle->payload().length());
+			temp.append(time_c);
+			temp.append("\n\n");
+		}
+
+		fseek(fr, 0, SEEK_END);
+		int h=fwrite(temp.c_str(),sizeof(char),strlen(temp.c_str()),fr);
+		fflush(fr);
+
+		if(EOF == fclose(fr))
+		{
+			printf("err:fclose failed\n");
+			unlock_BundleLog();
+			return ;
+		}
+		unlock_BundleLog();
+	}
+
+	void writeSendBundleLogToFile(string reason,Bundle *bundle)
+	{
+		lock_BundleLog();
+		FILE * fr;
+		errno=0;
+		fr= fopen(BundleLogPath.c_str(),"a");
+		if (NULL == fr)
+		{
+			if (EINVAL == errno)
+			{
+				printf("err:fopen log file %s failed\n",BundleLogPath.c_str());
+			}
+			else
+			{
+				printf("err:unknow\n");
+			}
+		}
+		string temp;
+		string father;
+
+		tm currentTime=CurrentTimeManager::Getinstance()->currentTime;
+		if(bundle->getBundleType()!=Bundle::ORIGINAL_BUNDLE &&
+			bundle->dest().str()!=BundleDaemon::GetInstance()->local_eid().str())
+		{
+			temp.append("send a new bundle:\n");
+			char time_c[10];
+			sprintf(time_c,"%d",currentTime.tm_mon+1);
+			temp.append(time_c);
+			temp.append("月,");
+			if(currentTime.tm_wday==0)
+				temp.append("星期天,");
+			else
+			{
+				sprintf(time_c,"%d",currentTime.tm_wday);
+				temp.append("星期");
+				temp.append(time_c);
+				temp.append(",");
+			}
+			sprintf(time_c,"%d",currentTime.tm_hour);
+			temp.append(time_c);
+			temp.append("点");
+			sprintf(time_c,"%d",currentTime.tm_min);
+			temp.append(time_c);
+			temp.append("分钟\n");
+			temp.append("bundle的类型: ");
+			if(bundle->getBundleType()==1)
+			{
+				temp.append("data_bundle\n");
+				temp.append("bundle的目的区域: ");
+				sprintf(time_c,"%d",bundle->bottomArea());
+				temp.append(time_c);
+				temp.append("\n");
+			}
+			if(bundle->getBundleType()==2)
+			{
+				temp.append("neighbour_bundle\n");
+			}
+			temp.append("bundle的源结点: ");
+			temp.append(bundle->source().str());
+			temp.append("\nbundle的目的结点: ");
+			temp.append(bundle->dest().str());
+			temp.append("\nbundle的负载: ");
+			sprintf(time_c,"%d",bundle->payload().length());
+			temp.append(time_c);
+			temp.append("\n");
+			temp.append(reason);
+			temp.append("\n");
+		}
+
+		fseek(fr, 0, SEEK_END);
+		int h=fwrite(temp.c_str(),sizeof(char),strlen(temp.c_str()),fr);
+		fflush(fr);
+
+		if(EOF == fclose(fr))
+		{
+			printf("err:fclose failed\n");
+			unlock_BundleLog();
+			return;
+		}
+		unlock_BundleLog();
+	}
+
 
 	///////////////////////////////////////////处理区域问题
 

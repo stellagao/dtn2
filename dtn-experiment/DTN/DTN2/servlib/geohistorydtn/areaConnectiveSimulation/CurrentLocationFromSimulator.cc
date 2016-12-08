@@ -64,7 +64,7 @@ namespace dtn{
 			int n = recvfrom(reply_loc_socket, recvBuf, MAXLINE,0, (struct sockaddr *)&(cliaddr_reply),&(servlen_reply));
 			if(n == -1)
 			{
-				 cout<<"read error"<<endl;
+				 cout<<"从RealSimulator中接受信息错误,来自于CurrentLocationFromSimulator"<<endl;
 				 continue;
 			}
 			recvBuf[n]=0;
