@@ -15,11 +15,17 @@
 	<node id="14" x="-500.0" y="0.0" type="priority"/> 
 	<node id="15" x="500.0" y="0.0" type="priority"/>  
 
-	<node id="16" x="-300.0" y="100.0" type="priority"/> 
-	<node id="17" x="-200.0" y="200.0" type="priority"/> 
-	<node id="18" x="100.0" y="100.0" type="priority"/> 
-	<node id="19" x="0.0" y="200.0" type="priority"/> 
-	<node id="20" x="-200.0" y="0.0" type="priority"/> 
-
+	<node id="16" x="-800.0" y="300.0" type="priority"/> 
+	<node id="17" x="-400.0" y="300.0" type="priority"/> 
+	<node id="18" x="-400.0" y="-300.0" type="priority"/> 
+	<node id="19" x="-800.0" y="-300.0" type="priority"/> 
+	<node id="20" x="-300.0" y="300.0" type="priority"/> 
+	<node id="21" x="300.0" y="300.0" type="priority"/> 
+	<node id="22" x="300.0" y="-300.0" type="priority"/> 
+	<node id="23" x="-300.0" y="-300.0" type="priority"/> 
+	<node id="24" x="400.0" y="300.0" type="priority"/> 
+	<node id="25" x="800.0" y="300.0" type="priority"/> 
+	<node id="26" x="800.0" y="-300.0" type="priority"/> 
+	<node id="27" x="400.0" y="-300.0" type="priority"/> 
 </nodes>
 
